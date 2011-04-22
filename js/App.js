@@ -13,7 +13,7 @@ $(document).ready(
 			$('#canvas').attr(getCanvasSize());
 			
 			_app = new ParticleSimulation();
-			_app.updateSize(getCanvasSize())
+			_app.updateSize(getCanvasSize());
 			_app.start();
 			
 			$('#canvas').click(_app.mouseClicked);
@@ -30,6 +30,7 @@ $(document).ready(
 		function resized()
 		{
 			$('#canvas').attr(getCanvasSize());
+			_app.updateSize(getCanvasSize());
 		}
 	}
 );
