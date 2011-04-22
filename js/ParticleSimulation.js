@@ -1,14 +1,14 @@
 var ParticleSimulation = function()
 {
-	// private
+	// private vars
 	var _self = this;
 	var _particles = [];
 	var _size = {width: 800, height: 600};
 	var _ctx = document.getElementById('canvas').getContext('2d');
-	var particles_max = 50;
+	var _particles_max = 50;
+	var _mouse = {x: _size.width / 2, y: _size.height / 2, over: false};
 	
-	// public
-	
+	// public vars
 	_self.run = true;
 	
 	// public functions
@@ -37,10 +37,31 @@ var ParticleSimulation = function()
 		_size = size;
 	}
 	
+	_self.mouseClicked = function(event)
+	{
+
+	}
+	
+	_self.mouseMoved = function(event)
+	{
+		_mouse.x = event.pageX;
+		_mouse.y = event.pageY;
+	}
+	
+	_self.mouseEntered = function(event)
+	{
+		_mouse.over = true;
+	}
+	
+	_self.mouseLeft = function(event)
+	{
+		_mouse.over = false;
+	}
+	
 	// private functions
 	function update()
 	{
-		for(var i = 0; i < particles_max - _particles.length; i++)
+		for(var i = 0; i < _particles_max - _particles.length; i++)
 		{
 			addParticle(_size.width / 2 + Math.random(), _size.height / 2 + Math.random());
 		}
@@ -95,7 +116,7 @@ var ParticleSimulation = function()
 	function draw()
 	{
 		//Clear BG
-		_ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+		_ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
 		_ctx.fillRect(0, 0, _size.width, _size.height);
 		
 		//Draw Attractor
@@ -119,7 +140,7 @@ var ParticleSimulation = function()
 			var px = ~~ (_particles[i].getPosition().x + 0.5);
 			var py = ~~ (_particles[i].getPosition().y + 0.5);
 			
-			_ctx.fillStyle = "rgb(0,0,0)";
+			_ctx.fillStyle = 'rgba(0, 0, 0, 0.75 )';
 			_ctx.beginPath();
 			_ctx.arc(px, py, 4, 0, Math.PI * 2, true);
 			_ctx.closePath();

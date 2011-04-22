@@ -2,7 +2,9 @@ $(document).ready(
 	function()
 	{
 		var app;
+		
 		$(window).resize(resized);
+		
 		init();
 		
 		function init()
@@ -13,6 +15,11 @@ $(document).ready(
 			_app = new ParticleSimulation();
 			_app.updateSize(getCanvasSize())
 			_app.start();
+			
+			$('#canvas').click(_app.mouseClicked);
+			$('#canvas').mouseenter(_app.mouseEntered);
+			$('#canvas').mousemove(_app.mouseMoved);
+			$('#canvas').mouseout(_app.mouseLeft);
 		}
 			
 		function getCanvasSize()
