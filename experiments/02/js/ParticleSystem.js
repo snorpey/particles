@@ -10,6 +10,7 @@ var ParticleSystem = function()
 	var _particles_max = 200;
 	var _particle_radius = 15;
 	
+	var _repellers = [];
 	var _repeller_radius = 100;
 	
 	// public vars
@@ -45,6 +46,8 @@ var ParticleSystem = function()
 	{
 		_mouse.x = event.pageX;
 		_mouse.y = event.pageY;
+		
+		addReppeller(_mouse.x, _mouse.y);
 	}
 	
 	_self.mouseMoved = function(event)
@@ -105,7 +108,12 @@ var ParticleSystem = function()
 		
 		while(i--)
 		{
-			//_particles[i].applyAttractionForce(Vector.create([_size.width / 2, _size.height / 2, 0]), 3000, .005);
+			_particles[i].applyAttractionForce(Vector.create([_size.width / 2, _size.height / 2, 0]), 3000, .005);
+			
+			for(var j = 0; j < _repellers.length; j++)
+			{
+				_particles[i].applyRepulsionForce(Vector.create([_repellers[j].getPosition().x, _repellers[j].getPosition().y, 0]), _repeller_radius, 0.65);
+			}
 			
 			_particles[i].applyRepulsionForce(Vector.create([_mouse.x, _mouse.y, 0]), _repeller_radius, 0.65);
 			_particles[i].addDampening(0.8);
@@ -133,6 +141,20 @@ var ParticleSystem = function()
 			_ctx.closePath();
 			_ctx.fill();
 		}
+		
+		var i = _repellers.length;
+		
+		while(i--)
+		{
+			var px = ~~ (_repellers[i].getPosition().x + 0.5);
+			var py = ~~ (_repellers[i].getPosition().y + 0.5);
+			
+			_ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+			_ctx.beginPath();
+			_ctx.arc(px, py, 4, 0, Math.PI * 2, true);
+			_ctx.closePath();
+			_ctx.fill();
+		}
 	}
 
 	function addParticle(x, y)
@@ -144,7 +166,7 @@ var ParticleSystem = function()
 	
 	function addReppeller(x, y)
 	{
-		var index = _particles.length;
+		var index = _repellers.length;
 		_repellers[index] = new Particle();
 		_repellers[index].initialize(x, y);
 	}
