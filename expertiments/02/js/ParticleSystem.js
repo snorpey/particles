@@ -1,4 +1,4 @@
-var ParticleSimulation = function()
+var ParticleSystem = function()
 {
 	// private vars
 	var _self = this;
@@ -105,7 +105,8 @@ var ParticleSimulation = function()
 		
 		while(i--)
 		{
-			_particles[i].applyAttractionForce(Vector.create([_size.width / 2, _size.height / 2, 0]), 3000, .005);
+			//_particles[i].applyAttractionForce(Vector.create([_size.width / 2, _size.height / 2, 0]), 3000, .005);
+			
 			_particles[i].applyRepulsionForce(Vector.create([_mouse.x, _mouse.y, 0]), _repeller_radius, 0.65);
 			_particles[i].addDampening(0.8);
 			_particles[i].update();
