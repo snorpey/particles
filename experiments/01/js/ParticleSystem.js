@@ -1,3 +1,20 @@
+// shim layer with setTimeout fallback, see
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+window.requestAnimFrame = (
+	function()
+	{
+  		return  window.requestAnimationFrame || 
+          	window.webkitRequestAnimationFrame || 
+         	window.mozRequestAnimationFrame    || 
+          	window.oRequestAnimationFrame      || 
+          	window.msRequestAnimationFrame     || 
+          	function(/* function */ callback, /* DOMElement */ element)
+          	{
+				window.setTimeout(callback, 1000 / 60);
+          	};
+	}
+)();
+
 var ParticleSystem = function()
 {
 	// private vars
@@ -23,18 +40,10 @@ var ParticleSystem = function()
 	
 	_self.run = function()
 	{
-		if(_self.run)
-		{
-			setTimeout(
-				function()
-				{
-					update();
-					draw();
-					_self.run();
-				}
-			);
-		}
-	}	
+		requestAnimFrame( _self.run );
+		update();
+		draw();
+	}
 	
 	_self.updateSize = function(size)
 	{
