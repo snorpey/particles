@@ -33,8 +33,6 @@ var ParticleSystem = function()
 	var _attractors = [];
 	var _attractor_radius = 500;
 	
-	var counter = 0;
-	
 	// public vars
 	_self.run = true;
 	
@@ -43,8 +41,6 @@ var ParticleSystem = function()
 	{
 		_self.run();
 	}
-	
-	var counter = 0;
 	
 	_self.run = function()
 	{
@@ -121,7 +117,7 @@ var ParticleSystem = function()
 		var i = _particles.length;
 		
 		while(i--)
-		{
+		{		
 			for(var j = 0; j < _repellers.length; j++)
 			{
 				_particles[i].applyRepulsionForce(Vector.create([_repellers[j].getPosition().x, _repellers[j].getPosition().y, 0]), _repeller_radius, 0.65);
@@ -131,11 +127,46 @@ var ParticleSystem = function()
 			{
 				_particles[i].applyAttractionForce(Vector.create([_attractors[j].getPosition().x, _attractors[j].getPosition().y, 0]), _attractor_radius, .005);
 			}
-				
-			_particles[i].applyRepulsionForce(Vector.create([_mouse.x, _mouse.y, 0]), _repeller_radius, 0.9);
-			_particles[i].addDampening(0.999);
 			
-			//	collide with sides
+			_particles[i].applyRepulsionForce(Vector.create([_mouse.x, _mouse.y, 0]), _repeller_radius, 0.65);
+			
+			if(_particles[i].getPosition().y > _size.height)
+			{
+				_particles[i].setPosition(Math.random() * _size.width, 0, 0);
+			}
+			
+			if(_particles[i].getPosition().x > _size.width)
+			{
+				_particles[i].setPosition(Math.random() * _size.width, _particles[i].getPosition().x, 0);
+			}
+			
+			_particles[i].applyForce(
+				Vector.create(
+					[
+						0,
+						_particles[i].map_range(
+							_particles[i].position.distanceFrom(
+								Vector.create(
+									[
+										_particles[i].getPosition().x,
+										_size.height, 
+										0
+									]
+								)
+							),
+							0,
+							_size.height,
+							1,
+							0.2
+						),
+						0
+					]
+				)
+			);
+			
+			_particles[i].addDampening(0.8);
+			_particles[i].update();
+			
 			if(_particles[i].getVelocity() != null)
 			{
 				var collided = false;
@@ -171,18 +202,11 @@ var ParticleSystem = function()
 				{
 					if(_particles[i].getVelocity().y > 0)
 					{
-						_particles[i].setVelocity(_particles[i].getVelocity().x, _particles[i].getVelocity().y * -1, _particles[i].getVelocity().z);
+						_particles[i].setVelocity(_particles[i].getVelocity().x, _particles[i].getVelocity().y * -2, _particles[i].getVelocity().z);
 						collided = true;
 					}
 				}
-				
-				if(collided)
-				{
-					_particles[i].addDampening(0.5);
-				}
 			}
-			
-			_particles[i].update();
 		}
 	}
 	

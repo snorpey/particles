@@ -20,8 +20,8 @@ var Particle = function()
 	
 	_self.update = function()
 	{
-		_self.velocity = _self.velocity.add(_self.acceleration);
-		_self.position = _self.position.add(_self.velocity);
+		_self.velocity = _self.velocity.add(this.acceleration);
+		_self.position = _self.position.add(this.velocity);
 
 		//reset acceleration
 		_self.acceleration.setElements([0, 0, 0]);
@@ -116,12 +116,7 @@ var Particle = function()
 	_self.setVelocity = function(x, y, z)
 	{
 		_self.velocity.setElements([x, y, z]);
-	}
-	
-	_self.getNextPosition = function()
-	{
-		return _self.position.add(_self.velocity.add(_self.acceleration));
-	}
+	}	
 	
 	_self.setLifespan = function(lifespan, death_rate)
 	{
@@ -133,5 +128,10 @@ var Particle = function()
 	_self.is_dead = function()
 	{
 		return _self.lifespan <= 0;
+	}
+	
+	_self.map_range = function(value, low1, high1, low2, high2)
+	{
+		return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 	}
 };
