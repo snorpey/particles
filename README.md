@@ -1,6 +1,18 @@
-# Particle experiment
-this is basically an ongoing exploration on particle systems I'm doing. I'll add a new experiment every now and then when I got an idea… Since this is learning by doing, the code is not yet optimized in any way. I always try to write human readable and easy understandable code, though. If you have a suggestion and/or a question contact and fork, please…
+particle experiment
+-------------------
+this repository contains a series of small esperiments with particle systems in the browser.
 
-The project is written in HTML5, CSS and Javascript and uses the canvas tag for rendering.
+i'm not actively adding any more content to this repo, so some of the code might be slightly outdated. please feel free to explore the source, submit pull requests if you encounter a bug or ask questions if you find something interesting.
 
-It uses James Coglans [Sylvester](http://sylvester.jcoglan.com/ "Sylvester") library.
+the code is written in html5, css and javascript. the canvas tag is used for rendering.
+
+thank you for checking out my experiments!
+
+third party code
+----------------
+* [sylvester](http://sylvester.jcoglan.com/ "sylvester") by [james coglan](https://github.com/jcoglan/), mit license
+* [jquery](http://jquery.com/ "jquery"), mit license
+
+license
+-------
+[mit](LICENSE)
